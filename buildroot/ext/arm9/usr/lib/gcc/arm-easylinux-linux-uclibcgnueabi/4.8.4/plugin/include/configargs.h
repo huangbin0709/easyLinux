@@ -1,0 +1,7 @@
+/* Generated automatically. */
+static const char configuration_arguments[] = "./configure --prefix=/project/trunk/easyLinux/buildroot/build/toolchain/host/usr --sysconfdir=/project/trunk/easyLinux/buildroot/build/toolchain/host/etc --enable-static --target=arm-easylinux-linux-uclibcgnueabi --with-sysroot=/project/trunk/easyLinux/buildroot/build/toolchain/host/usr/arm-easylinux-linux-uclibcgnueabi/sysroot --disable-__cxa_atexit --with-gnu-ld --disable-libssp --disable-multilib --with-gmp=/project/trunk/easyLinux/buildroot/build/toolchain/host/usr --with-mpfr=/project/trunk/easyLinux/buildroot/build/toolchain/host/usr --enable-target-optspace --disable-libsanitizer --enable-tls --disable-libmudflap --enable-threads --with-mpc=/project/trunk/easyLinux/buildroot/build/toolchain/host/usr --without-isl --without-cloog --with-float=soft --disable-decimal-float --with-abi=aapcs-linux --with-cpu=arm920t --with-float=soft --with-mode=arm --with-pkgversion='Buildroot 2015.02-g4dbad96-dirty' --with-bugurl=http://bugs.buildroot.net/ --enable-languages=c,c++ --disable-largefile --enable-poison-system-directories --with-build-time-tools=/project/trunk/easyLinux/buildroot/build/toolchain/host/usr/arm-easylinux-linux-uclibcgnueabi/bin --enable-shared --disable-libgomp";
+static const char thread_model[] = "posix";
+
+static const struct {
+  const char *name, *value;
+} configure_default_options[] = { { "abi", "aapcs-linux" }, { "cpu", "arm920t" }, { "float", "soft" }, { "mode", "arm" }, { "tls", "gnu" } };
