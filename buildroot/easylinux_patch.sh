@@ -17,17 +17,17 @@ then
     mkdir -p $build_dir
 fi
 	
-if [ ! -e $build_archive_dir ];
+if [ ! -L $build_archive_dir ];
 then
     ln -s $archive_dir $build_archive_dir
 fi
 
-if [ ! -e $build_appinc_dir ];
+if [ ! -L $build_appinc_dir ];
 then
     ln -s $appinc_dir $build_appinc_dir
 fi
 
-if [ ! -e $build_platinc_dir ];
+if [ ! -L $build_platinc_dir ];
 then
     ln -s $platinc_dir $build_platinc_dir
 fi
