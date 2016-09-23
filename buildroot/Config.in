@@ -621,13 +621,13 @@ source "system/Config.in"
 
 source "linux/Config.in"
 
+source "easylinux/Config.in"
+
 source "package/Config.in"
 
 source "fs/Config.in"
 
 source "boot/Config.in"
-
-source "easylinux/Config.in"
 
 source "package/Config.in.host"
 

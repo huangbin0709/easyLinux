@@ -336,8 +336,13 @@ endif
 
 $(2)_BASE_NAME	=  $(1)-$$($(2)_VERSION)
 $(2)_DL_DIR	=  $$(DL_DIR)/$$($(2)_BASE_NAME)
-$(2)_DIR	=  $$(BUILD_DIR)/$$($(2)_BASE_NAME)
 
+ifneq ($$(filter easylinux/%,$(pkgdir)),)
+export EASYLINUX_BUILD_DIR := $(BUILD_DIR)
+$(2)_DIR	=  $$(EASYLINUX_BUILD_DIR)/$$($(2)_BASE_NAME)
+else
+$(2)_DIR	=  $$(BUILD_DIR)/$$($(2)_BASE_NAME)
+endif
 ifndef $(2)_SUBDIR
  ifdef $(3)_SUBDIR
   $(2)_SUBDIR = $$($(3)_SUBDIR)
@@ -627,6 +632,8 @@ else ifneq ($$(filter boot/%,$(pkgdir)),)
 $(2)_KCONFIG_VAR = BR2_TARGET_$(2)
 else ifneq ($$(filter toolchain/%,$(pkgdir)),)
 $(2)_KCONFIG_VAR = BR2_$(2)
+else ifneq ($$(filter easylinux/%,$(pkgdir)),)
+$(2)_KCONFIG_VAR = BR2_EASYLINUX_$(2)
 else
 $(2)_KCONFIG_VAR = BR2_PACKAGE_$(2)
 endif

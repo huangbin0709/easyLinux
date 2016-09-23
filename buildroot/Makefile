@@ -387,13 +387,13 @@ ifneq ($(PACKAGE_OVERRIDE_FILE),)
 -include $(PACKAGE_OVERRIDE_FILE)
 endif
 
+# Include easylinux build mk file
+include easylinux/easylinux.mk
+
 include $(sort $(wildcard package/*/*.mk))
 
 include boot/common.mk
 include linux/linux.mk
-
-# Include easylinux build mk file
-include easylinux/easylinux.mk
 
 include system/system.mk
 include fs/common.mk

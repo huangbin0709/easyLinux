@@ -152,9 +152,9 @@ UBOOT_DEPENDENCIES += host-uboot-tools
 endif
 
 #include board common mk files if any
--include $(BOARD_COMMON_DIR)/uboot.mk
+-include $(BR2_BOARD_COMMON_DIR)/uboot.mk
 #include board specify mk files if any
--include $(BOARD_CUSTOM_DIR)/uboot.mk
+-include $(BR2_BOARD_CUSTOM_DIR)/uboot.mk
 #include the mk file to fix the pkgdir in package/pkg-utils.mk
 include $(TOPDIR)/boot/uboot/uboot-last.mk
 $(eval $(generic-package))

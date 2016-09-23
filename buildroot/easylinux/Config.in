@@ -19,4 +19,5 @@ config BR2_EASYLINUX_BOARD_NAME
 	string "board name"
 	default "helix"
 	
+	source "easylinux/core/Config.in"
 endmenu
