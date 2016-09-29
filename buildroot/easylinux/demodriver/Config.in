@@ -1,0 +1,3 @@
+config BR2_EASYLINUX_DEMODRIVER
+	bool "easylinux demo driver"
+	default n

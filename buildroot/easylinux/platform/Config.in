@@ -1,0 +1,3 @@
+config BR2_EASYLINUX_PLATFORM
+	bool "easylinux lib platform"
+	default n

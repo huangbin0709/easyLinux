@@ -1,0 +1,3 @@
+config BR2_EASYLINUX_PROCMGR
+	bool "easylinux app procmgr"
+	default n

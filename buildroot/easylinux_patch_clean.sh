@@ -1,6 +1,7 @@
 
 #!/bin/sh
-archive_dir=$1/../archive/$3
+archive_dir=$1/../archive/$4
+target_dir=$3/easylinux
 appinc_dir=$1/../src/application/include
 platinc_dir=$1/../src/platform/include
 build_dir=$2/easylinux
@@ -16,4 +17,9 @@ fi
 if [ -d $build_dir ];
 then
 	rm -rf $build_dir
+fi
+
+if [ -d $target_dir ];
+then
+	rm -rf $target_dir
 fi

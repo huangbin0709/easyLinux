@@ -1,5 +1,6 @@
 #!/bin/sh
-archive_dir=$1/../archive/$3
+archive_dir=$1/../archive/$4
+target_dir=$3/easylinux
 appinc_dir=$1/../src/application/include
 platinc_dir=$1/../src/platform/include
 build_dir=$2/easylinux
@@ -11,15 +12,22 @@ if [ ! -d $archive_dir ];
 then
     mkdir -p $archive_dir
 fi
-if [ ! -d $archive_dir/dynamic ];
-then
-    mkdir -p $archive_dir/dynamic
-fi
+
 if [ ! -d $build_dir ];
 then
     mkdir -p $build_dir
 fi
 	
+if [ ! -d $target_dir ];
+then
+    mkdir -p $target_dir
+fi
+
+if [ ! -d $target_dir/lib/modules ];
+then
+    mkdir -p $target_dir/lib/modules
+fi
+
 if [ ! -L $build_archive_dir ];
 then
     ln -s $archive_dir $build_archive_dir

@@ -1,20 +1,16 @@
 cmake_minimum_required(VERSION 3.0)
 #project name
-PROJECT(core)
+PROJECT(platform)
 #head file path
 INCLUDE_DIRECTORIES(
-include
 ../platform
 )
 #source directory
-AUX_SOURCE_DIRECTORY(src DIR_SRCS)
+AUX_SOURCE_DIRECTORY(demo DEMO_FILES)
 #set environment variable
-SET(TEST_MATH
-${DIR_SRCS}
-)
-SET(CMAKE_INSTALL_PREFIX /easylinux)
+#SET(CMAKE_INSTALL_PREFIX /easylinux)
 #add executable file
-ADD_EXECUTABLE(core ${TEST_MATH})
+ADD_LIBRARY(platform SHARED ${DEMO_FILES})
 #add link library
 #TARGET_LINK_LIBRARIES(core m)
-install(TARGETS core RUNTIME DESTINATION app/bin)
+install(TARGETS platform LIBRARY DESTINATION lib)

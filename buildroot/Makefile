@@ -158,6 +158,7 @@ BR_GRAPH_OUT := $(or $(BR2_GRAPH_OUT),pdf)
 BUILD_DIR := $(BASE_DIR)/build
 BINARIES_DIR := $(BASE_DIR)/images
 TARGET_DIR := $(BASE_DIR)/target
+EASYLINUX_DIR := easylinux_dir
 # initial definition so that 'make clean' works for most users, even without
 # .config. HOST_DIR will be overwritten later when .config is included.
 HOST_DIR := $(BASE_DIR)/host
@@ -426,15 +427,15 @@ TARGETS_LEGAL_INFO := $(patsubst %,%-legal-info,\
 		$(TARGETS) $(TARGETS_HOST_DEPS) $(HOST_DEPS))
 
 dirs: $(BUILD_DIR) $(STAGING_DIR) $(TARGET_DIR) \
-	$(HOST_DIR) $(BINARIES_DIR)
+	$(HOST_DIR) $(BINARIES_DIR) $(EASYLINUX_DIR)
 
 $(BUILD_DIR)/buildroot-config/auto.conf: $(BR2_CONFIG)
 	$(MAKE1) $(EXTRAMAKEARGS) HOSTCC="$(HOSTCC_NOCCACHE)" HOSTCXX="$(HOSTCXX_NOCCACHE)" silentoldconfig
 
-prepare: $(BUILD_DIR)/buildroot-config/auto.conf easylinux_patch
+$(EASYLINUX_DIR):$(BUILD_DIR) $(TARGET_DIR)
+	./easylinux_patch.sh $(TOPDIR) $(BUILD_DIR) $(TARGET_DIR) $(BR2_EASYLINUX_PROJECT_NAME)
+prepare: $(BUILD_DIR)/buildroot-config/auto.conf
 
-easylinux_patch:
-	./easylinux_patch.sh $(TOPDIR) $(BUILD_DIR) $(BR2_EASYLINUX_PROJECT_NAME)
 world: target-post-image
 
 .PHONY: all world toolchain dirs clean distclean source outputmakefile \
@@ -443,7 +444,7 @@ world: target-post-image
 	$(TARGETS) $(TARGETS_ROOTFS) \
 	$(TARGETS_DIRCLEAN) $(TARGETS_SOURCE) $(TARGETS_LEGAL_INFO) \
 	$(BUILD_DIR) $(STAGING_DIR) $(TARGET_DIR) \
-	$(HOST_DIR) $(BINARIES_DIR)
+	$(HOST_DIR) $(BINARIES_DIR) $(EASYLINUX_DIR)
 
 ################################################################################
 #

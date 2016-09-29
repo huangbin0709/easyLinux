@@ -5,8 +5,6 @@ BR2_BOARD_CUSTOM_DIR = $(TOPDIR)/board/$(BR2_EASYLINUX_VENDOR)/$(BR2_EASYLINLUX_
 BR2_BOARD_CUSTOM_DIR_STRIP = $(call qstrip,$(BOARD_CUSTOM_DIR))
 BR2_EASYLINUX_SOURCE_DIR = $(TOPDIR)/../src
 BR2_EASYLINUX_ARCHIVE_DIR = $(TOPDIR)/../archive/$(BR2_EASYLINUX_PROJECT_NAME)
-BR2_EASYLINUX_STATIC_LIB_DIR = $(EASYLINUX_ARCHIVE_DIR)
-BR2_EASYLINUX_DYNAMIC_LIB_DIR = $(EASYLINUX_ARCHIVE_DIR)/dynamic
 
 #include all easylinux app mk files
 #save the buildpath,we will fix the builddir to easylinux dir later
@@ -18,5 +16,5 @@ include $(sort $(wildcard easylinux/*/*.mk))
 export BUILD_DIR := $(build_saved_dir)
 
 easylinux-clean:
-	$(TOPDIR)/easylinux_patch_clean.sh $(TOPDIR) $(BUILD_DIR) $(BR2_EASYLINUX_PROJECT_NAME)
+	$(TOPDIR)/easylinux_patch_clean.sh $(TOPDIR) $(BUILD_DIR) $(TARGET_DIR) $(BR2_EASYLINUX_PROJECT_NAME)
 
