@@ -67,7 +67,7 @@ TOPDIR := $(shell pwd)
 CONFIG_CONFIG_IN = Config.in
 CONFIG = support/kconfig
 DATE := $(shell date +%Y%m%d)
-
+export LD_LIBRARY_PATH:=$LD_LIBRARY_PATH:$(TOPDIR)/ext/arm9/usr/lib
 # Compute the full local version string so packages can use it as-is
 # Need to export it, so it can be got from environment in children (eg. mconf)
 export BR2_VERSION_FULL := $(BR2_VERSION)$(shell $(TOPDIR)/support/scripts/setlocalversion)
