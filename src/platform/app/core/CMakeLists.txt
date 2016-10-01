@@ -6,6 +6,7 @@ INCLUDE_DIRECTORIES(
 include
 ../platform
 )
+LINK_DIRECTORIES(../arvhive)
 #source directory
 AUX_SOURCE_DIRECTORY(src DIR_SRCS)
 #set environment variable
@@ -13,6 +14,9 @@ SET(TEST_MATH
 ${DIR_SRCS}
 )
 SET(CMAKE_INSTALL_PREFIX /easylinux)
+#ADD_DEFINITIONS()
+#SEPARATE_ARGUMENTS()
+#SET(EXECUTABLE_OUTPUT_PATH $(PROJECT_BINARY_DIR)/bin)
 #add executable file
 ADD_EXECUTABLE(core ${TEST_MATH})
 #add link library
