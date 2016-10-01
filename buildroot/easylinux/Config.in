@@ -22,4 +22,5 @@ config BR2_EASYLINUX_BOARD_NAME
 	source "easylinux/core/Config.in"
 	source "easylinux/demodriver/Config.in"
 	source "easylinux/platform/Config.in"
+	source "easylinux/demo/Config.in"
 endmenu

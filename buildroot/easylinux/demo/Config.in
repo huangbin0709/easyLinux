@@ -1,0 +1,3 @@
+config BR2_EASYLINUX_DEMO
+	bool "easylinux app demo"
+	default n

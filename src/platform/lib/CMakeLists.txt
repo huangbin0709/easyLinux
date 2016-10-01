@@ -9,6 +9,7 @@ INCLUDE_DIRECTORIES(
 AUX_SOURCE_DIRECTORY(demo DEMO_FILES)
 #set environment variable
 #SET(CMAKE_INSTALL_PREFIX /easylinux)
+SET(CMAKE_SKIP_BUILD_RPATH FALSE)
 #add executable file
 ADD_LIBRARY(platform SHARED ${DEMO_FILES})
 #SET_TARGET_PROPERTIES(platform_core properties version 1.0 SOVERSION 0)
