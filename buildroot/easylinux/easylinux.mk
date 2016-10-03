@@ -19,7 +19,5 @@ easylinux-clean:
 	$(TOPDIR)/easylinux_patch_clean.sh $(TOPDIR) $(BUILD_DIR) $(TARGET_DIR) $(BR2_EASYLINUX_PROJECT_NAME)
 	
 easylinux-mkimage:
-	rm -rf $(TOPDIR)/image/*
-	cp -rf $(BINARIES_DIR)/* $(TOPDIR)/image
-	./easylinux_mkimage.sh $(HOST_DIR) $(TOPDIR)/image
+	./easylinux_mkimage.sh $(HOST_DIR) $(TOPDIR) $(BINARIES_DIR)
 
