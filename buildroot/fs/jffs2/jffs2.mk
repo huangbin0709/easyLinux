@@ -42,7 +42,11 @@ define ROOTFS_JFFS2_CMD
 endef
 else
 define ROOTFS_JFFS2_CMD
-	$(MKFS_JFFS2) $(JFFS2_OPTS) -d $(TARGET_DIR) -o $@
+	mkdir -p $(TARGET_DIR)/../tmptarget/usrconf && \
+	mkdir -p $(TARGET_DIR)/../tmptarget/usrconf/conf && \
+	mkdir -p $(TARGET_DIR)/../tmptarget/usrconf/log && \
+	mkdir -p $(TARGET_DIR)/../tmptarget/usrconf/key && \
+	$(MKFS_JFFS2) $(JFFS2_OPTS) -d $(TARGET_DIR)/../tmptarget/usrconf -o $(BINARIES_DIR)/usrconf.jffs2
 endef
 endif
 
