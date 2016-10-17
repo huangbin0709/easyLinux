@@ -1,0 +1,16 @@
+系统重启需要刷新文件缓存到磁盘
+原理：通过修改proc系统的 drop_caches 来清理 free 的 cache，下面是相关的文档信息：
+这些命令也可以释放较多的内存
+Writing to this will cause the kernel to drop clean caches, dentries and inodes from memory, causing that memory to become free.
+To free pagecache:
+* echo 1 > /proc/sys/vm/drop_caches
+To free dentries and inodes:
+* echo 2 > /proc/sys/vm/drop_caches
+To free pagecache, dentries and inodes:
+* echo 3 > /proc/sys/vm/drop_caches
+As this is a non-destructive operation, and dirty objects are notfreeable, the user should run “sync” first in order to make sure allcached objects are freed.
+This tunable was added in 2.6.16.
+如果想要把缓存写入到磁盘，你应该这样子写
+system("sync");
+system("echo 3 > /proc/sys/vm/drop_caches");
+通过刷新缓存后，读取的就是实时的硬盘数据了。

@@ -23,11 +23,14 @@ endif
 endif
 endif
 endif
-
+#little edian -le
+#big edian -be
+#ROOTFS_SQUASHFS_ARGS += -b 4K
+#ROOTFS_SQUASHFS_ARGS += -le
 define ROOTFS_SQUASHFS_CMD
-	$(HOST_DIR)/usr/bin/mksquashfs $(TARGET_DIR) $@ -noappend \
+	$(HOST_DIR)/usr/bin/mksquashfs $(TARGET_DIR)/../tmptarget/easylinux $(BINARIES_DIR)/usrimage.squashfs -noappend \
 		$(ROOTFS_SQUASHFS_ARGS) && \
-	chmod 0644 $@
+	chmod 0644 $(BINARIES_DIR)/usrimage.squashfs
 endef
 
 $(eval $(call ROOTFS_TARGET,squashfs))

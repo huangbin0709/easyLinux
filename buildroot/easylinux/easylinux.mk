@@ -5,7 +5,7 @@ BR2_BOARD_CUSTOM_DIR = $(TOPDIR)/board/$(BR2_EASYLINUX_VENDOR)/$(BR2_EASYLINLUX_
 BR2_BOARD_CUSTOM_DIR_STRIP = $(call qstrip,$(BOARD_CUSTOM_DIR))
 BR2_EASYLINUX_SOURCE_DIR = $(TOPDIR)/../src
 BR2_EASYLINUX_ARCHIVE_DIR = $(TOPDIR)/../archive/$(BR2_EASYLINUX_PROJECT_NAME)
-
+BR2_EASYLINUX_CFLAGS_STRIP = $(call qstrip,$(BR2_EASYLINUX_CFLAGS))
 #include all easylinux app mk files
 #save the buildpath,we will fix the builddir to easylinux dir later
 build_saved_dir := $(BUILD_DIR)

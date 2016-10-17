@@ -46,7 +46,8 @@ define ROOTFS_JFFS2_CMD
 	mkdir -p $(TARGET_DIR)/../tmptarget/usrconf/conf && \
 	mkdir -p $(TARGET_DIR)/../tmptarget/usrconf/log && \
 	mkdir -p $(TARGET_DIR)/../tmptarget/usrconf/key && \
-	$(MKFS_JFFS2) $(JFFS2_OPTS) -d $(TARGET_DIR)/../tmptarget/usrconf -o $(BINARIES_DIR)/usrconf.jffs2
+	$(MKFS_JFFS2) $(JFFS2_OPTS) -d $(TARGET_DIR)/../tmptarget/usrconf -o $(BINARIES_DIR)/usrconf.jffs2 && \
+	$(MKFS_JFFS2) $(JFFS2_OPTS) -d $(TARGET_DIR)/../tmptarget/easylinux -o $(BINARIES_DIR)/usrimage.jffs2
 endef
 endif
 

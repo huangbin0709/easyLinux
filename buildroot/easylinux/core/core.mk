@@ -19,15 +19,22 @@ cp -rf $(CORE_SITE)/etc/inittab $(TARGET_DIR)/etc
 cp -rf $(CORE_SITE)/etc/start_system.sh $(TARGET_DIR)/etc
 cp -rf $(CORE_SITE)/etc/init.d/* $(TARGET_DIR)/etc/init.d/
 endef
-CORE_POST_INSTALL_TARGET_HOOKS += CORE_COPY_DATA
+#CORE_POST_INSTALL_TARGET_HOOKS += CORE_COPY_DATA
 
 ifeq ($(BR2_EASYLINUX_DEMO),y)
 	CORE_INC += -DINC_APP_DEMO
 	CORE_DEPENDENCIES += demo
-	CORE_APP_LIBS += libdemo.a
+	CORE_LIBS += demo
 endif
 
-CORE_CFLAGS += $(BR2_EASYLINUX_CFLAGS)
-#CORE_CFLAGS += 
-CORE_CONF_OPTS += -DCMAKE_C_FLAGS="$(CORE_CFLAGS) $(CORE_INC) -Wall -Werror -fno-builtin -pthread -lm -lrt"
+ifeq ($(BR2_EASYLINUX_PLATFORM),y)
+	CORE_DEPENDENCIES += platform
+	CORE_LIBS += libplatform.so
+endif
+
+CORE_CFLAGS += $(BR2_EASYLINUX_CFLAGS_STRIP)
+CORE_CFLAGS += -Wall -fno-builtin
+CORE_CONF_OPTS += -DLINK_LIB="$(CORE_LIBS)"
+CORE_CONF_OPTS += -DCMAKE_C_FLAGS="$(CORE_CFLAGS) $(CORE_INC)"
+
 $(eval $(cmake-package))

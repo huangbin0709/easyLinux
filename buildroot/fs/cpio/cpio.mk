@@ -28,7 +28,12 @@ endif # BR2_ROOTFS_DEVICE_CREATION_STATIC
 ROOTFS_CPIO_PRE_GEN_HOOKS += ROOTFS_CPIO_ADD_INIT
 
 define ROOTFS_CPIO_CMD
-	cd $(TARGET_DIR) && find . | cpio --quiet -o -H newc > $@
+	cp -arf $(BR2_EASYLINUX_ARCHIVE_DIR)/usr/lib/* $(TARGET_DIR)/easylinux/lib && \
+	mkdir -p $(TARGET_DIR)/../tmptarget && \
+	cp -rf $(TARGET_DIR)/easylinux $(TARGET_DIR)/../tmptarget && \
+	rm -rf $(TARGET_DIR)/easylinux && \
+	cd $(TARGET_DIR) && find . | cpio --quiet -o -H newc > $@ && \
+	cp -rf $(TARGET_DIR)/../tmptarget/easylinux $(TARGET_DIR)
 endef
 
 $(BINARIES_DIR)/rootfs.cpio.uboot: $(BINARIES_DIR)/rootfs.cpio host-uboot-tools

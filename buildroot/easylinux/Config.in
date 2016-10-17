@@ -18,7 +18,8 @@ config BR2_EASYLINUX_VENDOR
 config BR2_EASYLINUX_BOARD_NAME
 	string "board name"
 	default "helix"
-	
+
+	source "easylinux/procmgr/Config.in"
 	source "easylinux/core/Config.in"
 	source "easylinux/demodriver/Config.in"
 	source "easylinux/platform/Config.in"
