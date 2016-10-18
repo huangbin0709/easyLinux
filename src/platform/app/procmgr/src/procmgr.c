@@ -12,6 +12,9 @@ int main(int argc,char *argv[])
 	
 	app_retarget_output();
 	
+	printf("\r\n\r\n\r\n\r\n\r\nWelcome to easylinux system!\r\n");
+	printf("Process procmgr startup ok\r\n");
+	
 	if(pthread_create(&id,NULL,procmgr_collector,NULL)<0)
 	{
 		printf("create the collector thread error\r\n");
@@ -47,7 +50,7 @@ int procmgrStartUpProcess(char *bin_name,char *name)
 	int pid = 0;
 	char path[50];
 	
-	printf("ready to startup process %s\r\n",name);
+	printf("Ready to startup process %s\r\n",name);
 	snprintf(path,sizeof(path),"%s/%s",EASYLINUX_EXE_PATH,bin_name);
 	
 	pid = fork();

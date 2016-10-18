@@ -14,5 +14,7 @@ int app_retarget_output(void)
 	dup2(fd,STDOUT_FILENO);
 	close(fd);
 	
+	setvbuf(stdout,NULL, _IONBF,0);
+	 
 	return 0;
 }
