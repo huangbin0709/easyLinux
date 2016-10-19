@@ -24,7 +24,7 @@ endef
 ifeq ($(BR2_EASYLINUX_DEMO),y)
 	CORE_INC += -DINC_APP_DEMO
 	CORE_DEPENDENCIES += demo
-	CORE_LIBS += demo
+	CORE_LIBS += libdemo.a
 endif
 
 ifeq ($(BR2_EASYLINUX_PLATFORM),y)

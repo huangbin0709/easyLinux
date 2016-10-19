@@ -5,6 +5,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "lib/libprocmgr.h"
+#include "gdsl/gdsl.h"
 
 const char *gCompileDate = __DATE__;
 const char *gCompileTime = __TIME__;

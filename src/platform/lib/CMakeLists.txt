@@ -4,15 +4,18 @@ PROJECT(platform)
 #head file path
 INCLUDE_DIRECTORIES(
 ../platform
+./gdsl/include
+../platform/gdsl
 )
 #source directory
 AUX_SOURCE_DIRECTORY(demo DEMO_FILES)
 AUX_SOURCE_DIRECTORY(procmgr PROCMGR_FILES)
+AUX_SOURCE_DIRECTORY(gdsl/src GDSL_FILES)
 #set environment variable
 #SET(CMAKE_INSTALL_PREFIX /easylinux)
 SET(CMAKE_SKIP_BUILD_RPATH FALSE)
 #add executable file
-ADD_LIBRARY(platform SHARED ${DEMO_FILES} ${PROCMGR_FILES})
+ADD_LIBRARY(platform SHARED ${DEMO_FILES} ${PROCMGR_FILES} ${GDSL_FILES})
 #SET_TARGET_PROPERTIES(platform_core properties version 1.0 SOVERSION 0)
 #add link library
 #TARGET_LINK_LIBRARIES(core m)
