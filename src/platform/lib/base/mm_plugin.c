@@ -1,37 +1,37 @@
 
 
-int mm_load_plugin(int mid,MM_PLUGIN_FUNC*func,unsigned char bCoreFirst)
+int mm_load_plugin(int mid,int (*module_init)(void),unsigned char bCoreFirst)
 {
 #if 0
 	if(currentPid == PID_CORE)
 	{
 		if(bCoreFirst)
 		{
-			if(NULL != func)
+			if(NULL != module_init)
 			{
-				func();
+				module_init();
 			}
-			mm_setState(mid,MM_BEGIN);
+			mm_setstate(mid,MM_BEGIN);
 			mm_wait(mid,MM_END);
 		}
 		else
 		{
-			mm_setState(mid,MM_BEGIN);
+			mm_setstate(mid,MM_BEGIN);
 			mm_wait(mid,MM_END);	
-			if(NULL != func)
+			if(NULL != module_init)
 			{
-				func();
+				module_init();
 			}			
 		}
 	}
 	else
 	{
 		mm_wait(mid,MM_BEGIN);
-		if(NULL != func)
+		if(NULL != module_init)
 		{
-			func();
+			module_init();
 		}
-		mm_setState(mid,MM_END);
+		mm_setstate(mid,MM_END);
 	}
 #endif
 	return 0;

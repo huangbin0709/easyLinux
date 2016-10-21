@@ -1,0 +1,5 @@
+
+char *midNameGet(int mid)
+{
+	
+}
