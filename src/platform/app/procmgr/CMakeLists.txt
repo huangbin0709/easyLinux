@@ -20,5 +20,5 @@ SEPARATE_ARGUMENTS(LINK UNIX_COMMAND ${LINK_LIB})
 #add executable file
 ADD_EXECUTABLE(procmgr ${PROCMGR_FILES})
 #add link library
-TARGET_LINK_LIBRARIES(procmgr pthread ${LINK})
+TARGET_LINK_LIBRARIES(procmgr pthread dl ${LINK})
 install(TARGETS procmgr RUNTIME DESTINATION bin)

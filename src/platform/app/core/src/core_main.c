@@ -4,7 +4,9 @@
 #include <fcntl.h>
 #include <string.h>
 #include <stdlib.h>
-#include "lib/libprocmgr.h"
+#include "lib/procmgr_app.h"
+#include "lib/pid.h"
+#include "lib/demo.h"
 #include "gdsl/gdsl.h"
 
 const char *gCompileDate = __DATE__;
@@ -23,6 +25,7 @@ void printHelp(void)
 #ifdef _TEST_MTD_
 	printf("       5.test the nand flash.\r\n");
 #endif
+	printf("       6.test coredump.\r\n");
 	printf("    Enter your selection:");
 }
 
@@ -32,6 +35,8 @@ void sysReboot(void)
 	system("sync");
 	system("echo 3 > /proc/sys/vm/drop_caches");
 	system("reboot");
+   /*等待直到重启完成*/
+	while(1);
 }
 
 void sysReset(void)
@@ -75,7 +80,7 @@ int main(int argc, char*argv[])
 {
 	char c;
 	
-	app_retarget_output();
+	appStartupResp(PID_CORE);
 	
 	printf("Process core startup ok\r\n\r\n\r\n\r\n");
 	
@@ -104,6 +109,9 @@ int main(int argc, char*argv[])
 				testNandFlash();
 				break;
 #endif
+			case '6':
+			    demo_test_coredump();
+				break;
 			default:
 			break;
 			

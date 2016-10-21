@@ -3,5 +3,7 @@
 
 int app_retarget_output(void);
 
+int appStartupResp(int pid);
 
+void setup_sigsegv(void);
 #endif

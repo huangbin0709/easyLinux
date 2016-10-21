@@ -4,14 +4,16 @@
 #include <pthread.h>
 #include <stdlib.h>
 #include "procmgr.h"
-#include "lib/libprocmgr.h"
+#include "lib/procmgr_app.h"
+#include "lib/pid.h"
 
 int main(int argc,char *argv[])
 {
 	pthread_t id;
 	
+	pid_init(PID_PROCMGR);
 	app_retarget_output();
-	
+	setup_sigsegv();
 	printf("\r\n\r\n\r\n\r\n\r\nWelcome to easylinux system!\r\n");
 	printf("Process procmgr startup ok\r\n");
 	
