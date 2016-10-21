@@ -28,6 +28,9 @@ endif # BR2_ROOTFS_DEVICE_CREATION_STATIC
 ROOTFS_CPIO_PRE_GEN_HOOKS += ROOTFS_CPIO_ADD_INIT
 
 define ROOTFS_CPIO_CMD
+	rm -rf $(TARGET_DIR)/usr/bin/top && \
+	rm -rf $(TARGET_DIR)/usr/bin/unzip && \
+	rm -rf $(TARGET_DIR)/usr/bin/wget && \
 	cp -arf $(BR2_EASYLINUX_ARCHIVE_DIR)/usr/lib/* $(TARGET_DIR)/easylinux/lib && \
 	mkdir -p $(TARGET_DIR)/../tmptarget && \
 	cp -rf $(TARGET_DIR)/easylinux $(TARGET_DIR)/../tmptarget && \

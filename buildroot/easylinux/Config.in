@@ -5,7 +5,7 @@ config BR2_EASYLINUX_PROJECT_NAME
 
 config BR2_EASYLINUX_CFLAGS
 	string "easylinux app build cflags"
-	default "-Werror -D_LITTLE_EDIAN=0x1234 -D_BIG_EDIAN=0x3412 -DBYTE_ORDER=0x1234 -D_MIPS_=2 -D_ARM_=1 -DCPU_ARCH=1"
+	default "-Werror -D_LITTLE_EDIAN=0x1234 -D_BIG_EDIAN=0x3412 -DBYTE_ORDER=0x1234"
 	
 config BR2_EASYLINUX_SDK_DIR
 	string "sdk source dir"
