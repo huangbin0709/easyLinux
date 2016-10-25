@@ -84,7 +84,7 @@ def main():
 	usrconf_img =usrconf_file.read()
 	usrconf_file.close()
 	#
-	usrconf_pad_len=0x800000-usrconf_len
+	usrconf_pad_len=0x200000-usrconf_len
 	#
 	if nouboot == 1:
 		format='>'+str(kernel_len)+'s'+str(kernel_pad_len)+'x'+str(usrimage_len)+'s'+str(usrimage_pad_len)+'x'+str(usrconf_len)+'s'+str(usrconf_pad_len)+'x'
