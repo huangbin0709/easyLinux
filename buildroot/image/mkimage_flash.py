@@ -6,23 +6,25 @@ import os
 import re
 
 #flash.bin才需要烧写usrconf.jffs2
-#mkimage_flash.py project_name [uboot] uImage usrimagejffs2
+#mkimage_flash.py project_name [uboot] uImage usrimagejffs2 usrconf.jffs2
 def main():
 	source="source/"
 	img_dir = "img/"
 	nouboot=0
 	nokernel=0
-	if len(sys.argv) < 4:
+	if len(sys.argv) < 5:
 		print 'flash.bin must contained kernel and usrimage'
 		return None
-	if len(sys.argv) == 4:
+	if len(sys.argv) == 5:
 		nouboot=1
 		fn_kernel = sys.argv[2]
 		fn_usrimage=sys.argv[3]
+		fn_usrconf=sys.argv[4]
 	else:
 		fn_uboot = sys.argv[2]
 		fn_kernel = sys.argv[3]
-		fn_usrimage=sys.argv[4]		
+		fn_usrimage=sys.argv[4]	
+		fn_usrconf=sys.argv[5]
 	#default 16bytes md5,md5 is calculated by tpGenMd5Image
 	flash_md5 = 'md50md50md50md50'
 	product_id = '1234567891234567'
@@ -71,14 +73,27 @@ def main():
 	#
 	usrimage_pad_len=0x800000-usrimage_len
 	#
+	
+	usrconf_file = open(source+fn_usrconf,'rb')
+	if usrconf_file is None:
+		print 'ERR: Open %s failed.' %(fn_usrconf)
+		return None
+	usrconf_file.seek(0,os.SEEK_END)
+	usrconf_len=usrconf_file.tell()
+	usrconf_file.seek(0,os.SEEK_SET)
+	usrconf_img =usrconf_file.read()
+	usrconf_file.close()
+	#
+	usrconf_pad_len=0x800000-usrconf_len
+	#
 	if nouboot == 1:
-		format='>'+str(kernel_len)+'s'+str(kernel_pad_len)+'x'+str(usrimage_len)+'s'+str(usrimage_pad_len)+'x'
+		format='>'+str(kernel_len)+'s'+str(kernel_pad_len)+'x'+str(usrimage_len)+'s'+str(usrimage_pad_len)+'x'+str(usrconf_len)+'s'+str(usrconf_pad_len)+'x'
 		fmt = struct.Struct(format)
-		image=fmt.pack(kernel_img,usrimage_img)
+		image=fmt.pack(kernel_img,usrimage_img,usrconf_img)
 	else:
-		format='>'+str(uboot_len)+'s'+str(uboot_pad_len)+'x'+str(kernel_len)+'s'+str(kernel_pad_len)+'x'+str(usrimage_len)+'s'+str(usrimage_pad_len)+'x'
+		format='>'+str(uboot_len)+'s'+str(uboot_pad_len)+'x'+str(kernel_len)+'s'+str(kernel_pad_len)+'x'+str(usrimage_len)+'s'+str(usrimage_pad_len)+'x'+str(usrconf_len)+'s'+str(usrconf_pad_len)+'x'
 		fmt = struct.Struct(format)
-		image=fmt.pack(uboot_img,kernel_img,usrimage_img)		
+		image=fmt.pack(uboot_img,kernel_img,usrimage_img,usrconf_img)		
 
 	image_file =open(img_dir+sys.argv[1]+'_flash.bin','wb')
 	if image_file is None:
