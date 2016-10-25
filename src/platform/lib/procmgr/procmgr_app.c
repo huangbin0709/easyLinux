@@ -89,7 +89,10 @@ static void print_call_link(ucontext_t *uc)
     void **frame_pointer = (void **)NULL;  
     void *return_address = NULL;  
     Dl_info dl_info = { 0 };  
-  
+    int *stackEnd = NULL;
+	char cmd[50]={0};
+	char buf[512]={0};
+	FILE *in = NULL;
 #if (defined __i386__)  
     frame_pointer = (void **)uc->uc_mcontext.gregs[REG_EBP];  
     return_address = (void *)uc->uc_mcontext.gregs[REG_EIP];  
@@ -128,32 +131,24 @@ static void print_call_link(ucontext_t *uc)
             sname = tmp;  
         }  
 #endif  
-		if(NULL != sname && NULL != dl_info.dli_fname)
-		{
-			/* No: return address <sym-name + offset> (filename) */  
-			sigsegv_outp("%02d: %p <%s + %lu> (%s)", ++i, return_address, sname,   
-				(unsigned long)return_address - (unsigned long)dl_info.dli_saddr,   
-														dl_info.dli_fname); 
-		}
-		else if(NULL != sname)
-		{
-			/* No: return address <sym-name + offset> (filename) */  
-			sigsegv_outp("%02d: %p <%s + %lu>", ++i, return_address, sname,   
-				(unsigned long)return_address - (unsigned long)dl_info.dli_saddr); 				
-		}
-		else
-		{
-			/* No: return address <sym-name + offset> (filename) */  
-			sigsegv_outp("%02d: %p <xxx + %lu>", ++i, return_address,  
-				(unsigned long)return_address - (unsigned long)dl_info.dli_saddr); 			
-		}
+		/* No: return address <sym-name + offset> (filename) */  
+		printf("%02d: %p <%s + %lu> (%s)\r\n", ++i, return_address, sname,   
+			(unsigned long)return_address - (unsigned long)dl_info.dli_saddr,   
+													dl_info.dli_fname); 
 #ifndef NO_CPP_DEMANGLE  
         if (tmp)    free(tmp);  
 #endif  
+		stackEnd = (int*)frame_pointer;
+		/*
         if (dl_info.dli_sname && !strcmp(dl_info.dli_sname, "main")) {  
             break;  
         }  
-  
+		*/
+        if((unsigned long)frame_pointer <= uc->uc_mcontext.arm_sp)
+		{
+			break;
+		}
+	
 #if (defined __x86_64__) || (defined __i386__)  
         return_address = frame_pointer[1];  
         frame_pointer = frame_pointer[0];  
@@ -162,7 +157,34 @@ static void print_call_link(ucontext_t *uc)
         frame_pointer = (void **)frame_pointer[-3];  
 #endif  
     }  
-    sigsegv_outp("Stack trace end.");  
+	printf("\r\nStack Memory:\r\n"); 
+	//printf("stackEnd:%p\r\n",stackEnd);
+	for(i = 0; i < 1000; i++)
+	{
+		if(i != 0 && (i % 4 == 0))
+		{
+			printf("\r\n");
+		}
+		if((unsigned long)stackEnd < uc->uc_mcontext.arm_sp)
+		{
+			break;
+		}
+		
+		printf("%p [%08x]",stackEnd,*stackEnd);
+		stackEnd--;	
+	}
+	printf("\r\nMemory map:\r\n"); 
+	sprintf(cmd,"cat /proc/%d/maps",getpid());
+	in = popen(cmd,"r");
+	if(NULL != in)
+	{
+		while(fgets(buf,512,in))
+		{
+			printf("%s\r\n",buf);
+		}
+		pclose(in);
+	}
+    printf("----------------------------------end---------------------------------------\r\n");  
 }  
   
 static void sigsegv_handler(int signo, siginfo_t *info, void *context)  
@@ -174,7 +196,8 @@ static void sigsegv_handler(int signo, siginfo_t *info, void *context)
 		proc_name=pidNameGet(currentPid);
         if(proc_name)
 		{
-			printf("Process %s Segmentation Fault!\r\n",proc_name);  
+			printf("----------------------Segmentation Fault----------------------------------\r\n");
+			printf("Process %s\r\n",proc_name); 
 		}
 		else
 		{
