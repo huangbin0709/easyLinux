@@ -15,16 +15,19 @@ def main():
 	if len(sys.argv) < 5:
 		print 'flash.bin must contained kernel and usrimage'
 		return None
+	print '\r\nmake image %s_flash.bin...' % (sys.argv[1])
 	if len(sys.argv) == 5:
 		nouboot=1
 		fn_kernel = sys.argv[2]
 		fn_usrimage=sys.argv[3]
 		fn_usrconf=sys.argv[4]
+		print 'the image does not contains uboot'
 	else:
 		fn_uboot = sys.argv[2]
 		fn_kernel = sys.argv[3]
 		fn_usrimage=sys.argv[4]	
 		fn_usrconf=sys.argv[5]
+		print 'the image contains all'
 	#default 16bytes md5,md5 is calculated by tpGenMd5Image
 	flash_md5 = 'md50md50md50md50'
 	product_id = '1234567891234567'
@@ -41,6 +44,7 @@ def main():
 			return None
 		uboot_file.seek(0,os.SEEK_END)
 		uboot_len=uboot_file.tell()
+		print 'uboot size is 0x%x' % uboot_len
 		uboot_file.seek(0,os.SEEK_SET)
 		uboot_img =uboot_file.read()
 		uboot_file.close()
@@ -55,6 +59,7 @@ def main():
 		return None
 	kernel_file.seek(0,os.SEEK_END)
 	kernel_len=kernel_file.tell()
+	print 'kernel size is 0x%x' % kernel_len
 	kernel_file.seek(0,os.SEEK_SET)
 	kernel_img =kernel_file.read()
 	kernel_file.close()
@@ -67,6 +72,7 @@ def main():
 		return None
 	usrimage_file.seek(0,os.SEEK_END)
 	usrimage_len=usrimage_file.tell()
+	print 'usrimage size is 0x%x' % usrimage_len
 	usrimage_file.seek(0,os.SEEK_SET)
 	usrimage_img =usrimage_file.read()
 	usrimage_file.close()
@@ -102,7 +108,6 @@ def main():
 	image_file.write(image)
 	image_file.close()
 	
-if __name__=="__main__":   
-    print("mkimage flash.bin....")   
+if __name__=="__main__":
     main()
 	

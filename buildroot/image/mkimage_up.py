@@ -12,26 +12,35 @@ def main():
 	img_dir = "img/"
 	nouboot=0
 	nokernel=0
-	fn_uboot='uboot.bin'
+	fn_uboot='u-boot.bin'
 	fn_kernel='uImage'
 	if len(sys.argv) < 3:
 		print 'too few params'
 		return None
+	print '\r\nmake image %s_up.bin...' % (sys.argv[1])
 	#print 'param[0] %s param[1] %s param[2] %s' % (sys.argv[0],sys.argv[1],sys.argv[2])
 	if len(sys.argv) == 3:
 		nouboot=1
 		nokernel=1
 		fn_usrimage=sys.argv[2]
+		print 'the image does not contains uboot and kernel'
 	if len(sys.argv) == 4:
 		patt = 'uImage'
 		ret = re.match(patt,sys.argv[2])
 		if ret is None:
 			nokernel=1
 			fn_uboot = sys.argv[2]
+			print 'the image does not contains kernel'
 		else:
 			nouboot=1
 			fn_kernel = sys.argv[2]
+			print 'the image does not contains uboot'
 		fn_usrimage=sys.argv[3]
+	if len(sys.argv) > 4:
+		fn_uboot = sys.argv[2]
+		fn_kernel = sys.argv[3]
+		fn_usrimage = sys.argv[4]
+		print 'the image contains all'
 	#default 16bytes md5,md5 is calculated by tpGenMd5Image
 	flash_md5 = 'md50md50md50md50'
 	product_id = '1234567891234567'
@@ -44,10 +53,11 @@ def main():
 	if nouboot == 0:
 		uboot_file =open(source+fn_uboot,'rb')
 		if uboot_file is None:
-			print 'ERR: Open %s failed.' %(fn_uboot)
+			print 'error: Open %s failed.' %(fn_uboot)
 			return None
 		uboot_file.seek(0,os.SEEK_END)
 		uboot_len=uboot_file.tell()
+		print 'uboot size is 0x%x' % uboot_len
 		uboot_file.seek(0,os.SEEK_SET)
 		uboot_img =uboot_file.read()
 		uboot_file.close()
@@ -59,10 +69,11 @@ def main():
 	if nokernel == 0:
 		kernel_file =open(source+fn_kernel,'rb')
 		if kernel_file is None:
-			print 'ERR: Open %s failed.' %(fn_kernel)
+			print 'error: Open %s failed.' %(fn_kernel)
 			return None
 		kernel_file.seek(0,os.SEEK_END)
 		kernel_len=kernel_file.tell()
+		print 'kernel size is 0x%x' % kernel_len
 		kernel_file.seek(0,os.SEEK_SET)
 		kernel_img =kernel_file.read()
 		kernel_file.close()
@@ -72,10 +83,11 @@ def main():
 		
 	usrimage_file = open(source+fn_usrimage,'rb')
 	if usrimage_file is None:
-		print 'ERR: Open %s failed.' %(fn_usrimage)
+		print 'error: Open %s failed.' %(fn_usrimage)
 		return None
 	usrimage_file.seek(0,os.SEEK_END)
 	usrimage_len=usrimage_file.tell()
+	print 'usrimage size is 0x%x' % usrimage_len
 	usrimage_file.seek(0,os.SEEK_SET)
 	usrimage_img =usrimage_file.read()
 	usrimage_file.close()
@@ -88,8 +100,8 @@ def main():
 	flashver = '0x010000'
 	sfver = '0x010000'
 	ver = flashver+sfver
-	print 'INFO:flashver %s'%flashver
-	print 'INFO:soferver %s'%sfver
+	print 'flashver %s'%flashver
+	print 'soferver %s'%sfver
 	#                    sz_boot  kernel_off  kernel_sz  img1_off   img1_sz    img2_off    img2_sz  usrconf_off usrconf_sz  version
 	flashDistributeInfo=('0xa0000','0xa0000','0x400000','0x4a0000','0x800000','0x0000000','0x000000','0xca0000','0x200000', ver)
 	#gen image header
@@ -105,11 +117,10 @@ def main():
 		
 	image_file =open(img_dir+sys.argv[1]+'_up.bin','wb')
 	if image_file is None:
-		print 'ERR: Open imgfile failed.'
+		print 'error: Open imgfile failed.'
 		return None
 	image_file.write(image)
 	image_file.close()
 
 if __name__=="__main__":   
-    print("mkimage up.bin....")   
     main()
