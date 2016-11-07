@@ -258,7 +258,6 @@ int app_retarget_output(void)
 
 int appStartupResp(int pid)
 {
-	pid_init(pid);
 	app_retarget_output();
-	setup_sigsegv();
+	
 }

@@ -6,8 +6,10 @@
 #include <stdlib.h>
 #include "lib/procmgr_app.h"
 #include "lib/pid.h"
+#include "lib/mid.h"
 #include "lib/demo.h"
 #include "gdsl/gdsl.h"
+#include "common/eaTypes.h"
 
 const char *gCompileDate = __DATE__;
 const char *gCompileTime = __TIME__;
@@ -76,15 +78,15 @@ void testNandFlash(void)
 }
 #endif
 
-int main(int argc, char*argv[])
+int core_main()
 {
 	char c;
-	
-	appStartupResp(PID_CORE);
 	
 	printf("Process core startup ok\r\n\r\n\r\n\r\n");
 	
 	sleep(5);
+	/*控制进程初始化顺序*/
+	mm_load_plugin(MID_SYSMANAGE,NULL,TRUE);
 	
 	while(1)
 	{
@@ -118,6 +120,20 @@ int main(int argc, char*argv[])
 		}
 	}
 	
+	
+	return 0;
+}
+
+int main(int argc,char *argv[])
+{
+	/*初始化上半部*/
+	baseInit_th(PID_CORE);
+	/*初始化平台服务*/
+	platform_init(0);
+	/*各模块初始化函数*/
+	core_main();
+	/*初始化下半部*/
+	baseInit_bh();
 	
 	return 0;
 }

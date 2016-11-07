@@ -120,6 +120,8 @@ def main():
 		print 'error: Open imgfile failed.'
 		return None
 	image_file.write(image)
+	#可写固定个数
+	#image_file.write('0xFF'*size)
 	image_file.close()
 
 if __name__=="__main__":   
